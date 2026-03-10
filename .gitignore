@@ -1,0 +1,6 @@
+### Global/macOS.gitignore
+# General macOS files
+.DS_Store
+__MACOSX/
+
+
