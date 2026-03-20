@@ -279,3 +279,15 @@ The core loop remains the same.
 - Review it with the user
 - Improve it based on feedback and usage
 - Repeat until it is actually useful
+
+## Tone and Formatting
+
+The contents in SKILL.md must follow this instruction set for tone and formatting. This is important to ensure that skills are consistently clear, concise, and easy to use.
+
+Keep formatting simple and low-friction. Favor plain paragraphs, short lists, and direct examples. Avoid heavy scaffolding, excessive hierarchy, and template-like transitions. The document should feel like clear working guidance, not a formal handbook.
+
+Prefer natural prose over rigid document structure. Use `##` headings to separate major sections when they genuinely improve navigation. Do not use `###` or deeper heading levels. When a subsection distinction is important enough to call out, use an XML tag like `<section>` or a semantically named tag to group the content — but apply this sparingly, only when the distinction genuinely aids navigation. Do not replace every removed heading with a label-like line ending in a colon. If a short sentence can introduce the next idea, prefer that.
+
+Use the simplest syntax that preserves clarity. Bold only what demands immediate attention; italics only for terms or citations. Both should be rare. Avoid decorative phrasing, redundant labels, and mechanical patterns such as repeated "X:" lead-ins. Lists should be introduced naturally and only when they actually improve readability.
+
+When a concept can be made concrete with a single example, skip the abstract explanation and give the example directly.Keep the tone concise, direct, and technical. Optimize for flow, readability, and decision quality. Avoid filler transitions like "In summary", "It is worth noting", or "To conclude". If a paragraph exceeds five sentences, consider whether it can be split or cut. The writing should feel calm, deliberate, and pragmatic.
