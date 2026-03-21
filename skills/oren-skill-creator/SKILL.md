@@ -21,7 +21,7 @@ Your job when using this skill is to figure out where the user is in that loop a
 
 ## About Skills
 
-Skills are modular, self-contained folders that extend Codex's capabilities by providing specialized knowledge, workflows, and reusable resources. Think of them as onboarding guides for specific domains or recurring tasks.
+Skills are modular, self-contained folders that extend Agents's capabilities by providing specialized knowledge, workflows, and reusable resources. Think of them as onboarding guides for specific domains or recurring tasks.
 
 In practice, a good skill usually provides four things.
 
@@ -30,11 +30,23 @@ In practice, a good skill usually provides four things.
 3. Domain expertise - Company-specific knowledge, schemas, business rules, and conventions
 4. Reusable resources - Scripts, references, and assets that help future runs avoid rediscovering the same context
 
+<skill-types>
+1. Technique: Concrete method with steps to follow (condition-based-waiting, root-cause-tracing)
+2. Pattern: Way of thinking about problems (flatten-with-flags, test-invariants)
+3. Reference: API docs, syntax guides, tool documentation (office docs)
+</skill-types>
+
+## When to Create a Skill
+
+Create a skill when The technique isn't intuitively obvious to Agents, and Agents would struggle to infer it reliably on its own. If the task is simple and well-known, a skill may not be necessary. If the task is complex, domain-specific, or has a high cost of failure, a skill can provide valuable guidance and guardrails.
+
 ## Core Principles
 
 Keep it concise. The context window is a public good. Skills share it with the system prompt, conversation history, other skills, and the user's request.
 
-Assume Codex is already smart. Only include information it would not reliably infer on its own. Prefer concise examples over long explanations.
+The most important part of a skill is the `description` field in the frontmatter. This is the primary trigger mechanism, so it must clearly describe when it should be used.
+
+Assume Agents is already smart. Only include information it would not reliably infer on its own. Prefer concise examples over long explanations.
 
 Match the degree of freedom to the task's fragility and variability.
 
@@ -43,8 +55,6 @@ Match the degree of freedom to the task's fragility and variability.
 - Low freedom: Use tight instructions when consistency is critical and mistakes are costly
 
 Think in terms of terrain. A narrow bridge needs guardrails. An open field does not.
-
-Explain why an instruction matters instead of stacking rigid MUST and NEVER statements. The model will generalize better when it understands the reason behind a rule.
 
 Generalize instead of overfitting. A skill should work across many future prompts, not just the examples used during development. When feedback comes from one or two cases, look for the broader pattern before editing the skill.
 
@@ -57,15 +67,13 @@ Every skill consists of a required `SKILL.md` file and optional bundled resource
 ```text
 skill-name/
 ├── SKILL.md
-├── agents/                 # optional; only if the user explicitly asks for UI metadata
-│   └── openai.yaml
+├── agents/
+│   └── openai.yaml # optional: user explicitly asks
 └── Bundled Resources
     ├── scripts/
     ├── references/
     └── assets/
 ```
-
-This `skill-creator` skill does not need to depend on its own helper scripts to be effective. The skills it creates may still include `scripts/` whenever deterministic execution or repeated implementation effort justifies them.
 
 Every `SKILL.md` has two parts.
 
@@ -76,7 +84,7 @@ Every `SKILL.md` has two parts.
 
 If that metadata is explicitly requested, do the following.
 
-- Read `references/openai_yaml.md` first if it exists
+- Read `references/openai_yaml.md` first
 - Create human-facing `display_name`, `short_description`, and `default_prompt` that match `SKILL.md`
 - Use repository helpers if they exist; otherwise write or update the file manually
 - Only include optional interface fields if the user explicitly provides them
@@ -107,8 +115,6 @@ A skill should only contain files that directly support its function. Do not cre
 - `QUICK_REFERENCE.md`
 - `CHANGELOG.md`
 - similar auxiliary files
-
-Keep the skill focused on helping another agent do the work.
 
 ## Progressive Disclosure Design Principle
 
@@ -181,7 +187,7 @@ When updating an existing skill, keep these constraints in mind.
 - Work with the current structure unless there is a clear reason to reorganize it
 - Keep bundled resources only if they still support the current workflow
 
-Then write or revise `SKILL.md`. Remember that it is being created for another instance of Codex to use. Include procedural knowledge, domain detail, and workflow guidance that would genuinely help another agent succeed.
+Then write or revise `SKILL.md`. Remember that it is being created for another instance of Agents to use. Include procedural knowledge, domain detail, and workflow guidance that would genuinely help another agent succeed.
 
 For frontmatter, write YAML with the following fields.
 
@@ -270,6 +276,7 @@ Web-based environments may require more sequential work and lighter validation. 
 If this skill folder includes supporting references, use them intentionally.
 
 - `references/openai_yaml.md` for `agents/openai.yaml` field definitions and constraints
+- `references/anthropic_best_practices.md` the SOTA for skills design released by Anthropic
 - `agents/` files only when building a skill that genuinely needs multi-agent instructions
 
 The core loop remains the same.
