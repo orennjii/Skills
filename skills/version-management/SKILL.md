@@ -38,18 +38,6 @@ description: Git and version-control change analysis. Use this skill whenever th
 
 3. 判断用户意图，再按需加载 reference。
 
-## Routing
-
-只读取和当前任务直接相关的 reference，不要全量加载。
-
-| 用户目标 | 读取文件 |
-| --- | --- |
-| 写 commit message / full commit message | `references/commit-messages.md` |
-| 总结当前改动 | `references/change-summaries.md` |
-| 规划如何拆 commit | `references/commit-splitting.md` |
-| 写 PR 文案、changelog、release notes | `references/pr-and-release-notes.md` |
-| 判断 major / minor / patch | `references/version-bumps.md` |
-
 如果用户的请求跨多个目标，例如“先帮我拆 commit，再给 PR 描述”，按顺序读取相关文件，但仍然只读需要的那几份。
 
 ## General operating rules
